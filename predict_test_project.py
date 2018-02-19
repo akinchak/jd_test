@@ -6,28 +6,26 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 
-# small self-made script for example test on real data
+# Small self-made script for example test on real data
 from small_test_example import test_list
 
-# real data example test output
+# Real data example test output
 text_for_test = '''
 Review_ID: {}\n
 Predict_Star: {}\n
-Real Star: {}\n
+Real_Star: {}
 '''
 
-# choose 20 keywords with the highest TF/IDF weights
+# Choose 20 keywords with the highest TF/IDF weights
 def clean(text):
-    draft = ' '.join(jieba.analyse.extract_tags(text, topK=20, 
-                                                withWeight=False, 
-                                                allowPOS=()))
-    draft = draft.split()
-    clean_text = ' '.join(word for word in draft)
+    clean_text = ' '.join(jieba.analyse.extract_tags(text, topK=20, 
+                                                     withWeight=False, 
+                                                     allowPOS=()))
     return clean_text
 
-shop_review_data = pd.read_csv('e:/profitero/jd_reviews.csv')
+shop_review_data = pd.read_csv('jd_reviews.csv')
 
-# drop null values from DataFrame
+# Drop null values from DataFrame
 shop_review_data = shop_review_data.dropna()
 
 new_clean_review = []
@@ -38,7 +36,7 @@ for text in shop_review_data['review']:
    
 new_data = {'review': new_clean_review, 'stars': shop_review_data.stars}
 
-# create new DataFrame with clean data
+# Create new DataFrame with clean data
 shop_new_data = pd.DataFrame(data=new_data)
 
 X_train, X_test, y_train, y_test = train_test_split(
@@ -52,7 +50,7 @@ nb = MultinomialNB(alpha=0.1)
 nb.fit(train_data, y_train)
 preds = nb.predict(test_data)
 
-# model accuracy score output
+# Model accuracy score output
 '''
 print(metrics.accuracy_score(y_test, preds))
 '''
@@ -75,8 +73,7 @@ Review_ID: 1
 
 Predict_Star: [ 1.]
 
-Real Star: 1
-
+Real_Star: 1
 
 ********************
 
@@ -84,8 +81,7 @@ Review_ID: 2
 
 Predict_Star: [ 1.]
 
-Real Star: 1
-
+Real_Star: 1
 
 ********************
 
@@ -93,8 +89,7 @@ Review_ID: 3
 
 Predict_Star: [ 5.]
 
-Real Star: 3
-
+Real_Star: 3
 
 ********************
 
@@ -102,8 +97,7 @@ Review_ID: 4
 
 Predict_Star: [ 4.]
 
-Real Star: 3
-
+Real_Star: 3
 
 ********************
 
@@ -111,8 +105,7 @@ Review_ID: 5
 
 Predict_Star: [ 4.]
 
-Real Star: 5
-
+Real_Star: 5
 
 ********************
 
@@ -120,8 +113,7 @@ Review_ID: 6
 
 Predict_Star: [ 1.]
 
-Real Star: 5
-
+Real_Star: 5
 
 ********************
 
